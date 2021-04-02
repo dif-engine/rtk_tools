@@ -19,7 +19,8 @@ from std_msgs.msg import String
  
 import Tkinter as tk
 import pymsgbox
-from tkfilebrowser import askopendirname
+#from tkfilebrowser import askopendirname
+from rtk_tools.filebrowser import askopendirname
 from rtk_tools.filebrowser import asksaveasfilename
 from rtk_tools import dictlib
 from dashlog import dashLog
@@ -197,8 +198,10 @@ def cb_run(n):
       item["state"]=1
       timeout.set(functools.partial(cb_runstat,n),3)
       if "pre" in item:
-        print "dash pre",item["pre"]
-        subprocess.Popen(item["pre"].split())
+        try:
+          subprocess.Popen(item["pre"].split())
+        except Exception:
+          print "dashboard pre("+item["pre"]+") failed"
   elif item["state"]==2:
     if "confirm" in item:
       if item["confirm"]:
@@ -244,8 +247,11 @@ def cb_stop(n):
   item["button"]["image"]=starticon
   item["state"]=0
   if "post" in item:
-    subprocess.Popen(item["post"].split())
- 
+    try:
+      subprocess.Popen(item["post"].split())
+    except Exception:
+      print "dashboard post("+item["post"]+") failed"
+
 shutdown=False
 def cb_shutdown(msg):
   global shutdown
