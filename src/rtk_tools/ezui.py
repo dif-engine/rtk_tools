@@ -176,7 +176,7 @@ class rtkEzui(object):
 
   def cb_save(self):
     filename=self.filepath()
-    f=tkMessageBox.askyesno("Confirm",self.prop["message"]["save"]+"["+filename.rsplit('/',1)[1]+"]")
+    f=messagebox.askyesno("Confirm",self.prop["message"]["save"]+"["+filename.rsplit('/',1)[1]+"]")
     if f is False: return
     try:
       yf=open(filename, "r")

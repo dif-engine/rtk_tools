@@ -25,6 +25,7 @@ class rtkPub(rtkTopic):
     self.io.grid(row=len(page.widgets),column=1,sticky="nswe")
 
   def cb_pub(self):
+    print("ooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
     x=self.io.winfo_rootx()
     y=self.io.winfo_rooty()
     msg=""
@@ -34,10 +35,12 @@ class rtkPub(rtkTopic):
       msg=self.prop["message"]
       if msg=="": msg=self.prop["label"]
     f=True
-    if msg!="": f=tkMessageBox.askyesno("Confirm",msg)
+    if msg!="": f=messagebox.askyesno("Confirm",msg)
     if f is False: return
     if self.discon:
       self.label.config(background='#FF0000')
+      print("*.:.:.:.:.:.:.:.:***.:.:.:.::.:.:.:.:")
+
     else:
       self.pub.publish(self.msg)
       self.label.config(background='#555555')

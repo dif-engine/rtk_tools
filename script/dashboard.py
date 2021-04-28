@@ -17,7 +17,7 @@ from std_msgs.msg import Bool
 from std_msgs.msg import String
  
 import tkinter as tk
-#import pymsgbox
+import pymsgbox
 from tkfilebrowser import askopendirname
 from rtk_tools.filebrowser import asksaveasfilename
 from rtk_tools import dictlib
