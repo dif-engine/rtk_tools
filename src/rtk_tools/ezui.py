@@ -126,14 +126,12 @@ class rtkEzui(object):
         continue
     f.close()
     self.ctrl=tk.Frame(self.pane,bd=2,background='#444444')
-    self.ctrl.columnconfigure(0,weight=4)
+    self.ctrl.columnconfigure(0,weight=2)
     self.ctrl.columnconfigure(1,weight=1)
-    self.ctrl.columnconfigure(2,weight=4)
-    self.ctrl.columnconfigure(3,weight=5)
-    # 2021/03/16 hato ------------------------------ start ------------------------------
-    # iconpath=commands.getoutput("rospack find rtk_tools")+"/icon/"
-    iconpath=subprocess.getoutput("rospack find rtk_tools")+"/icon/"
-    # 2021/03/16 hato ------------------------------  end  ------------------------------
+    self.ctrl.columnconfigure(2,weight=2)
+    self.ctrl.columnconfigure(3,weight=3)
+    self.ctrl.columnconfigure(4,weight=2)
+    iconpath=commands.getoutput("rospack find rtk_tools")+"/icon/"
     if self.larricon is None:
       self.larricon=tk.PhotoImage(file=iconpath+self.prop["icon"]["larr"])
     if self.rarricon is None:
@@ -145,7 +143,8 @@ class rtkEzui(object):
     self.pshow.grid(row=0,column=1,padx=1,pady=1,sticky='nsew')
     self.pshow.config(text=str(rtkPage.pageNo+1)+"/"+str(len(rtkPage.pages)))
     tk.Button(self.ctrl,image=self.rarricon,command=self.cb_pagefwd).grid(row=0,column=2,padx=1,pady=1,sticky='nsew')
-    if self.prop["dump"]!="": tk.Button(self.ctrl,image=self.saveicon,command=self.cb_save).grid(row=0,column=3,padx=1,pady=1,sticky='nsew')
+    tk.Label(self.ctrl,font=(self.prop["font"]["family"],self.prop["font"]["size"]),anchor='c').grid(row=0,column=3,padx=1,pady=1,sticky='nsew')
+    if self.prop["dump"]!="": tk.Button(self.ctrl,image=self.saveicon,command=self.cb_save).grid(row=0,column=4,padx=1,pady=1,sticky='nsew')
     rtkPage.show(0)
     self.ctrl.pack(fill='x',anchor='sw',expand=1)
     try:
