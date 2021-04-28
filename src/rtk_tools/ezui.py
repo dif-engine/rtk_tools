@@ -131,7 +131,7 @@ class rtkEzui(object):
     self.ctrl.columnconfigure(2,weight=2)
     self.ctrl.columnconfigure(3,weight=3)
     self.ctrl.columnconfigure(4,weight=2)
-    iconpath=commands.getoutput("rospack find rtk_tools")+"/icon/"
+    iconpath=subprocess.check_output("rospack find rtk_tools".split(" ")).decode().strip()+"/icon/"
     if self.larricon is None:
       self.larricon=tk.PhotoImage(file=iconpath+self.prop["icon"]["larr"])
     if self.rarricon is None:
