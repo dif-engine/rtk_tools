@@ -1,13 +1,13 @@
 import yaml
 import time
 import copy
-import commands
+import subprocess
 import functools
 import os
 
-import Tkinter as tk
-import ttk
-import tkMessageBox
+import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox
 
 import rospy
 import roslib
@@ -92,7 +92,7 @@ class rtkEzui(object):
       rospy.logwarn("dump_ver@ error")
     if len(path)>0: path=path+"/"+self.prop["dump"]
     else: path=self.prop["dump"]
-    print "ezui::filepath",path
+    print("ezui::filepath",path)
     return path
 
   def top_on(self,root):
@@ -106,7 +106,7 @@ class rtkEzui(object):
     f=open(self.prop["conf"],'r')
     lines=f.readlines()
     for n,line in enumerate(lines):
-      print "ezui::parsing line ",n
+      print("ezui::parsing line ",n)
       try:
         prop=eval("{"+line+"}")
       except:
@@ -150,7 +150,10 @@ class rtkEzui(object):
     try:
       filename=self.filepath()
       yf=open(filename, "r")
-      rtkWidget.Origin=yaml.load(yf)
+      # 2021/03/16 hato ------------------------------ start ------------------------------
+      # rtkWidget.Origin=yaml.load(yf)
+      rtkWidget.Origin=yaml.safe_load(yf)
+      # 2021/03/16 hato ------------------------------  end  ------------------------------
       yf.close()
     except:
       rospy.logwarn("ezui::origin parameter load error "+filename)
@@ -172,7 +175,7 @@ class rtkEzui(object):
 
   def cb_save(self):
     filename=self.filepath()
-    f=tkMessageBox.askyesno("Confirm",self.prop["message"]["save"]+"["+filename.rsplit('/',1)[1]+"]")
+    f=messagebox.askyesno("Confirm",self.prop["message"]["save"]+"["+filename.rsplit('/',1)[1]+"]")
     if f is False: return
     try:
       yf=open(filename, "r")
@@ -180,7 +183,10 @@ class rtkEzui(object):
       rospy.logwarn("ezui::open exception "+filename)
       return
     try:
-      param=yaml.load(yf)
+      # 2021/03/16 hato ------------------------------ start ------------------------------
+      # param=yaml.load(yf)
+      param=yaml.safe_load(yf)
+      # 2021/03/16 hato ------------------------------  end  ------------------------------
     except:
       yf.close()
       rospy.logwarn("ezui::parser exception")

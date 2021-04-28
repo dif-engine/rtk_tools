@@ -1,10 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import numpy as np
 import sys
 import os
 import time
-import commands
+import subprocess
 import functools
 import re
 
@@ -13,8 +13,8 @@ import rospy
 from std_msgs.msg import Bool
 from std_msgs.msg import String
 
-import Tkinter as tk
-import tkMessageBox
+import tkinter as tk
+from tkinter import messagebox
 #import ttk
 from tkfilebrowser import askopendirname
 from rtk_tools.filebrowser import asksaveasfilename
@@ -113,9 +113,14 @@ def cb_copy(n):
     rospy.logerr("Recipe:Copy To dir exist RecipeName='%s'", to_name)
   else:
     func_ret = set_recipe(to_name, n)
-    commands.getoutput('cp -a '
+    # 2021/03/16 hato ------------------------------ start ------------------------------
+    #commands.getoutput('cp -a '
+    #                   + dirpath + '/' + from_name + ' '
+    #                   + dirpath + '/' + to_name)
+    subprocess.getoutput('cp -a '
                        + dirpath + '/' + from_name + ' '
                        + dirpath + '/' + to_name)
+    # 2021/03/16 hato ------------------------------  end  ------------------------------
     massage = (exec_item["name"] + ' ' + MSG_TBL["ok"] + '\n'
                + 'From:' + from_name + '\n'
                + 'To:' + to_name)
@@ -261,12 +266,15 @@ except:
 try:
   dictlib.merge(Config,conf)
 except Exception as e:
-  print "get_param exception:",e.args
+  print("get_param exception:",e.args)
 
 dictlib.merge(Config,parse_argv(sys.argv))
 
 dirpath = Config["dump_prefix"]
-thispath = commands.getoutput("rospack find rtk_tools")
+# 2021/03/16 hato ------------------------------ start ------------------------------
+# thispath = commands.getoutput("rospack find rtk_tools")
+thispath = subprocess.getoutput("rospack find rtk_tools")
+# 2021/03/16 hato ------------------------------ start ------------------------------
 
 buttons = []
 entrys = dict()
@@ -354,7 +362,7 @@ for n, line in enumerate(lines):
       item["button"].grid(column=col_no, row=row_no,
                           sticky='ne'+'nw'+'s',
                           padx=(0, 5), pady=(0, 5), ipady=5)
-    print "recipe item ", n, item
+    print("recipe item ", n, item)
     buttons.append(item)
   elif prop["class"] == 'Label':
     wlabel = tk.Label(frame, text=(prop["name"]+':'),
@@ -379,6 +387,6 @@ while not rospy.is_shutdown():
   try:
     root.update()
   except Exception as e:
-    print "recipe update exception", e.args
+    print("recipe update exception", e.args)
     sys.exit(0)
   time.sleep(1)

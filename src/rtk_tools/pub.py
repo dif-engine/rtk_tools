@@ -1,9 +1,9 @@
 from .topic import rtkTopic
 from . import dictlib
-import commands
+import subprocess
 
-import Tkinter as tk
-import tkMessageBox
+import tkinter as tk
+from tkinter import messagebox
 import roslib
 import rospy
 from std_msgs.msg import Bool
@@ -15,13 +15,17 @@ class rtkPub(rtkTopic):
     dictlib.merge(self.prop,{"message":"","confirm":False,"icon":"run.png"})
   def __init__(self,page,prop):
     super(rtkPub,self).__init__(page,prop)
-    iconpath=commands.getoutput("rospack find rtk_tools")+"/icon/"
+    # 2021/03/16 hato ------------------------------ start ------------------------------
+    # iconpath=commands.getoutput("rospack find rtk_tools")+"/icon/"
+    iconpath=subprocess.getoutput("rospack find rtk_tools")+"/icon/"
+    # 2021/03/16 hato ------------------------------  end  ------------------------------
     if self.buttonicon is None:
       self.buttonicon=tk.PhotoImage(file=iconpath+self.prop["icon"])
     self.io=tk.Button(page.frame,image=self.buttonicon,command=self.cb_pub)
     self.io.grid(row=len(page.widgets),column=1,sticky="nswe")
 
   def cb_pub(self):
+    print("ooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
     x=self.io.winfo_rootx()
     y=self.io.winfo_rooty()
     msg=""
@@ -31,10 +35,12 @@ class rtkPub(rtkTopic):
       msg=self.prop["message"]
       if msg=="": msg=self.prop["label"]
     f=True
-    if msg!="": f=tkMessageBox.askyesno("Confirm",msg)
+    if msg!="": f=messagebox.askyesno("Confirm",msg)
     if f is False: return
     if self.discon:
       self.label.config(background='#FF0000')
+      print("*.:.:.:.:.:.:.:.:***.:.:.:.::.:.:.:.:")
+
     else:
       self.pub.publish(self.msg)
       self.label.config(background='#555555')
