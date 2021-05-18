@@ -52,7 +52,7 @@ class rtkText(rtkWidget):
     value=dictlib.value(self.Origin,self.prop["name"])
     if value is not None:
       self.io.config(background='#AAAAAA')
-      if tkMessageBox.askyesno("Confirm",self.prop["message"]):
+      if messagebox.askyesno("Confirm",self.prop["message"]):
         paramlib.set_param(self.prop["name"],value)
       self.io.config(background='#FFFFFF')
   def on_timeout(self):

@@ -33,5 +33,5 @@ class rtkPopup(rtkTopic):
   def on_timeout(self):
     if self.discon: super(rtkPopup,self).on_timeout()
     elif len(self.disp)>0:
-      f=tkMessageBox.showinfo("Notification",self.prop["label"]+"\n"+self.disp)
+      f=messagebox.showinfo("Notification",self.prop["label"]+"\n"+self.disp)
 

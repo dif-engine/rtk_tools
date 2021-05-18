@@ -25,7 +25,6 @@ class rtkPub(rtkTopic):
     self.io.grid(row=len(page.widgets),column=1,sticky="nswe")
 
   def cb_pub(self):
-    print("ooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
     x=self.io.winfo_rootx()
     y=self.io.winfo_rooty()
     msg=""
@@ -39,7 +38,6 @@ class rtkPub(rtkTopic):
     if f is False: return
     if self.discon:
       self.label.config(background='#FF0000')
-      print("*.:.:.:.:.:.:.:.:***.:.:.:.::.:.:.:.:")
 
     else:
       self.pub.publish(self.msg)
