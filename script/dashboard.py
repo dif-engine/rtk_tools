@@ -19,8 +19,7 @@ from std_msgs.msg import String
  
 import Tkinter as tk
 import pymsgbox
-#from tkfilebrowser import askopendirname
-from rtk_tools.filebrowser import askopendirname
+from tkfilebrowser import askopendirname
 from rtk_tools.filebrowser import asksaveasfilename
 from rtk_tools import dictlib
 from dashlog import dashLog
