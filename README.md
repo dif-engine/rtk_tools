@@ -16,6 +16,11 @@ pip install tkfilebrowser --user
 ~~~
 sudo apt install xterm
 ~~~
+4. PyMsgBox
+メッセージボックスライブラリ。
+~~~
+pip3 install PyMsgBox
+~~~
 
 ## 解説
 ### dictlib  
