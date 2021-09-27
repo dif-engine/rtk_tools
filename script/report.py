@@ -117,11 +117,10 @@ def cb_dump(s):
   to_complete()
   f=open('report_dump.txt', 'w')
   f.write(str(Config["labels"]).lstrip('[').rstrip(']')+"\n")
-  map(lambda x:f.write(str(x).lstrip('[').rstrip(']')+"\n"),Logs)
-#
-#  for x in Logs:
-#    f.write(str(x).lstrip('[').rstrip(']')+"\n")
-#  f.close()
+  for x in Logs:
+    ln=str(x).lstrip('[').rstrip(']')
+    f.write(ln+"\n")
+  f.close()
   return
 
 ##############
@@ -151,10 +150,6 @@ except Exception as e:
 
 dictlib.merge(Config,parse_argv(sys.argv))
 
-if "recipe" in Config:
-  Config["keys"].insert(0,"__recipe__")
-  Config["labels"].insert(0,"recipe")
-
 Config["keys"].insert(0,"__count__")
 Config["labels"].insert(0,"#")
 
@@ -175,7 +170,7 @@ ngcolor=Config["color"]["ng"]
 root=tk.Tk()
 root.client(socket.gethostname())
 root.title("Report")
-root.geometry(str(Config["width"])+"x100+0"+str(Config["altitude"]))
+root.geometry(str(Config["width"])+"x120+0"+str(Config["altitude"]))
 frame=tk.Frame(root,bd=2,background=bgcolor)
 frame.pack(fill='x',anchor='n',expand=1)
 
