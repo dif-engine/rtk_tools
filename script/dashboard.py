@@ -24,34 +24,34 @@ from rtk_tools import dictlib
 from dashlog import dashLog
 from rtk_tools import timeout
  
-Config=OrderedDict([
-  ("confirm","Stop anyway"),
-  ("autoclose",10),
-  ("altitude","+0"),
-  ("font",{"family":"System", "size":10}),
-  ("color",{
-    "background": "#00FF00",
-    "lit": "#FF8800",
-    "unlit": "#000000",
-    "mask": "#666666"
-  }),
-  ("display",{
-    "color":{
-      "background": "#FFFF00",
-      "foreground": "#0000FF"
-    }
-  }),
-  ("icon",{
-    "logo":"logo.png",
-    "recipe":"pan.png",
-    "start":"start.png",
-    "stop":"stop.png",
-    "open":"open.png",
-    "copy":"copy.png",
-    "redraw":"pencil.png",
-  }),
-  ("password","admin")
-])
+Config = OrderedDict() # python3.6以降なら普通の dict でもよい（格納した順序が保存される）
+Config['confirm'] = 'Stop anyway'
+Config['autoclose'] = 10
+Config['altitude'] = '+0'
+Config['font'] = {"family":"System", "size":10}
+Config['color'] = {
+  "background": "#00FF00",
+  "lit": "#FF8800",
+  "unlit": "#000000",
+  "mask": "#666666"
+}
+Config['display'] = {
+  "color":{
+    "background": "#FFFF00",
+    "foreground": "#0000FF"
+  }
+}
+Config['icon'] = {
+  "logo":"logo.png",
+  "recipe":"pan.png",
+  "start":"start.png",
+  "stop":"stop.png",
+  "open":"open.png",
+  "copy":"copy.png",
+  "redraw":"pencil.png",
+}
+Config['password'] = 'admin'
+ 
 Param={
   "recipe":""
 }
