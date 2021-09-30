@@ -64,11 +64,13 @@ RecipeName=''
 ####dialog box control########
 msgBox=None
 msgBoxWait=None
+
 def cb_lift():
-  if msgBox is not None:
+  if msgBox:
     for k in msgBox.children:
         msgBox.children[k].lift()
-  msgBoxWait=msgBox.after(500,cb_lift)
+  msgBoxWait = msgBox.after(500,cb_lift)
+
 def cb_wait_nop():
   msgBoxWait=msgBox.after(1000,cb_wait_nop)
 
@@ -83,13 +85,15 @@ def set_param_sync(name,dat):
     rospy.set_param(name+'/'+k,org)
 
 def cb_wRecipe(rc):
-  if wRecipe is None: return
+  if not wRecipe: 
+    return
   wRecipe.delete(0,tk.END)
   wRecipe.insert(0,rc)
 
 def cb_load(msg):
   global Param,RecipeName
-  if wRecipe is None: return
+  if not wRecipe: 
+    return
   Param["recipe"]=msg.data
   recipe=msg.data.split(':')
   RecipeName=recipe[0]
@@ -107,8 +111,10 @@ def cb_load(msg):
 
 def cb_open_dir():
   global msgBox,msgBoxWait
-  if wRecipe is None: return
-  if msgBoxWait is not None: return
+  if not wRecipe: 
+    return
+  if msgBoxWait:
+    return
   msgBox=tk.Toplevel()
   msgBox.title("Load Recipe")
   msgBox.withdraw()
@@ -125,8 +131,10 @@ def cb_open_dir():
  
 def cb_save_as():
   global RecipeName,msgBox,msgBoxWait
-  if wRecipe is None: return
-  if msgBoxWait is not None: return
+  if not wRecipe: 
+    return
+  if msgBoxWait: 
+    return
   msgBox=tk.Toplevel()
   msgBox.title("Save Recipe as")
   msgBox.withdraw()
@@ -155,7 +163,8 @@ def cb_save_as():
 ####launch manager############
 def cb_run(n):
   global Launches,msgBox,msgBoxWait
-  if msgBoxWait is not None: return
+  if msgBoxWait:
+    return
   item=Launches[n]
   if item["state"]==0:
     fg=True
