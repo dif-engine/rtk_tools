@@ -10,6 +10,7 @@ import subprocess
 import functools
 import re
 from collections import OrderedDict
+import pathlib
  
 import roslib
 import rospy
@@ -430,7 +431,8 @@ if "load" in Config:
     except Exception as e:
       print("second load marge error:",e.args)
 if "recipe" in Config:
-  srcpath=re.subn(r".*?/","/",thispath[::-1],1)[0][::-1]
+  parent_path = pathlib.Path(thispath).parent
+  srcpath = str(parent_path)
   dirpath=srcpath+Config["recipe"]["dir"]
   linkpath=srcpath+Config["recipe"]["link"]
   print("dirpath",dirpath)
