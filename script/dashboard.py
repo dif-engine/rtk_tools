@@ -369,12 +369,11 @@ def cb_mbox_pop():
   ebox.popup()
 
 def parse_argv(argv):
-  args={}
+  args = {}
   for arg in argv:
-    tokens = arg.split(":=")
-    if len(tokens) == 2:
-      key = tokens[0]
-      args[key] = tokens[1]
+    key, value, *rest = arg.split(":=")
+    if not rest:
+      args[key] = value
   return args
 
 ########################################################
